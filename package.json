@@ -1,7 +1,7 @@
 {
   "name": "@localnerve/sass-asset-functions",
   "version": "0.1.0",
-  "description": "asset functions for dart-sass or other sass compilers",
+  "description": "compass-style asset functions for dart-sass or other sass compilers",
   "main": "index.js",
   "scripts": {
     "test": "jest",
