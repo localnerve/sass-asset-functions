@@ -18,7 +18,7 @@ _**NB** Please note that the `functions` option of dart-sass/node-sass is still 
 
 ## Origin
 
-This module provides some of the asset functions that came with [Compass](http://compass-style.org). Forked from [node-sass-asset-functions](https://github.com/fetch/node-sass-asset-functions).
+This module provides some of the asset functions that came with [Compass](http://compass-style.org). Originally a fork of  [node-sass-asset-functions](https://github.com/fetch/node-sass-asset-functions) that was never merged.
 
 ## Functions Exposed to Sass
 
