@@ -4,6 +4,7 @@
 
 ![Verify](https://github.com/localnerve/sass-asset-functions/workflows/Verify/badge.svg)
 [![npm version](https://badge.fury.io/js/%40localnerve%2Fsass-asset-functions.svg)](https://badge.fury.io/js/%40localnerve%2Fsass-asset-functions)
+[![Coverage Status](https://coveralls.io/repos/github/localnerve/sass-asset-functions/badge.svg?branch=master)](https://coveralls.io/github/localnerve/sass-asset-functions?branch=master)
 
 This module supplies functions to a Sass compiler which can be called from your Sass code.
 For example, the `image-url` used here in place of `url` adds build-time configuration to resolve the file to the proper location as seen from the web:
