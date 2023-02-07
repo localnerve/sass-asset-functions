@@ -1,3 +1,9 @@
+/**
+ * Sass asset function suite.
+ * 
+ * Copyright (c) 2023 Alex Grant (@localnerve), LocalNerve LLC
+ * Licensed under the MIT license.
+ */
 const defaultSass = require('sass');
 const Processor = require('./lib/processor');
 
