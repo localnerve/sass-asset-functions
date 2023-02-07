@@ -6,11 +6,11 @@
  */
 /* eslint-env jest */
 
-const fs = require('fs');
-const path = require('path');
-const otherSass = require('node-sass');
-const defaultSass = require('sass');
-const assetFunctions = require('../');
+import fs from 'node:fs';
+import path from 'node:path';
+import otherSass from 'node-sass';
+import defaultSass from 'sass';
+import assetFunctions from '../index.js';
 
 const sassDir = path.join(__dirname, 'scss');
 const cssDir = path.join(__dirname, 'css');
