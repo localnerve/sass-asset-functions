@@ -35,16 +35,25 @@ This module provides some of the asset functions that came with [Compass](http:/
 Basic usage is as easy as setting the `functions` property:
 
 ```js
+// non-module, require usage
 const sass = require('sass');
-const fiber = require('fibers');
-const assetFunctions = require('@localnerve/sass-asset-functions');
+const { default: assetFunctions } = require('@localnerve/sass-asset-functions');
 
-sass.render({
-  functions: assetFunctions(/* options */),
-  file: scss_filename,
-  fiber, // dart-sass async render performance detail
-  [, options..]
-}, function(err, result) { /*...*/ });
+const result = sass.compile(scss_filename, {
+  functions: assetFunctions(/* options */)
+  [, options...]
+});
+```
+
+```js
+// module usage
+import sass from 'sass';
+import assetFunctions from '@localnerve/sass-asset-functions';
+
+const result = sass.compile(scss_filename, {
+  functions: assetFunctions(/* options */)
+  [, options...]
+});
 ```
 
 ## Options
@@ -78,18 +87,15 @@ So if your project images reside in `public/img` at build-time instead of `publi
 
 ```js
 const sass = require('sass');
-const fiber = require('fibers');
-const assetFunctions = require('@localnerve/sass-asset-functions');
+const { default: assetFunctions } = require('@localnerve/sass-asset-functions');
 
-sass.render({
+const result = sass.compile(scss_filename, {
   functions: assetFunctions({
     images_path: 'public/img',
     http_images_path: '/images'
-  }),
-  file: scss_filename,
-  fiber,
-  [, options..]
-}, function(err, result) { /*...*/ });
+  })
+  [, options...]
+});
 ```
 
 #### `sass`: Overriding the default compiler with Node-Sass
@@ -98,30 +104,27 @@ Example using the node-sass compiler using the new option `sass`.
 
 ```js
 const sass = require('node-sass');
-const assetFunctions = require('@localnerve/sass-asset-functions');
+const { default: assetFunctions } = require('@localnerve/sass-asset-functions');
 
-sass.render({
-  functions: assetFunctions({ sass }),
-  file: scss_filename,
-  [, options..]
-}, function(err, result) { /*...*/ });
+const result = sass.compile(scss_filename, {
+  functions: assetFunctions({ sass })
+  [, options...]
+});
 ```
 
 #### `asset_host`: a function which completes with a string used as asset host.
 
 ```js
-sass.render({
+const result = sass.compile(scss_filename, {
   functions: assetFunctions({
-    asset_host: function(http_path, done){
+    asset_host: (http_path, done) => {
       done('http://assets.example.com');
       // or use the supplied path to calculate a host
       done(`http://assets${http_path.length % 4}.example.com`);
     }
-  }),
-  file: scss_filename,
-  fiber,
-  [, options..]
-}, function(err, result) { /*...*/ });
+  })
+  [, options...]
+});
 ```
 
 #### `asset_cache_buster`: a function to rewrite the asset path
@@ -129,16 +132,14 @@ sass.render({
 When this function returns a string, it's set as the query of the path. When returned an object, `path` and `query` will be used.
 
 ```js
-sass.render({
+const result = sass.compile(scss_filename, {
   functions: assetFunctions({
-    asset_cache_buster: function(http_path, real_path, done){
+    asset_cache_buster: (http_path, real_path, done) => {
       done('v=123');
     }
-  }),
-  file: scss_filename,
-  fiber,
-  [, options..]
-}, function(err, result) { /*...*/ });
+  })
+  [, options...]
+});
 ```
 
 ##### A more advanced example:
@@ -149,16 +150,15 @@ For example, `/images/myimage.png` would become `/images/myimage-8557f1c9b01dd6f
 
 ```js
 const sass = require('sass');
-const fiber = require('fibers');
 const path = require('path');
 const fs = require('fs');
 const hexdigest = require('hexdigest');
-const assetFunctions = require('@localnerve/sass-asset-functions');
+const { default: assetFunctions } = require('@localnerve/sass-asset-functions');
 
-sass.render({
+const result = sass.compile(scss_filename, {
   functions: assetFunctions({
-    asset_cache_buster: function(http_path, real_path, done){
-      hexdigest(real_path, 'sha1', function(err, digest) {
+    asset_cache_buster: (http_path, real_path, done) => {
+      hexdigest(real_path, 'sha1', (err, digest) => {
         if (err) {
           // an error occurred, maybe the file doesn't exist.
           // Calling `done` without arguments will result in an unmodified path.
@@ -171,11 +171,9 @@ sass.render({
         }
       });
     }
-  }),
-  file: scss_filename,
-  fiber,
-  [, options..]
-}, function(err, result) { /*...*/ });
+  })
+  [, options...]
+});
 ```
 
 ## Contributing
