@@ -35,9 +35,9 @@ This module provides some of the asset functions that came with [Compass](http:/
 Basic usage is as easy as setting the `functions` property:
 
 ```js
-// non-module usage
+// non-module, require usage
 const sass = require('sass');
-const assetFunctions = require('@localnerve/sass-asset-functions');
+const { default: assetFunctions } = require('@localnerve/sass-asset-functions');
 
 const result = sass.compile(scss_filename, {
   functions: assetFunctions(/* options */)
@@ -87,7 +87,7 @@ So if your project images reside in `public/img` at build-time instead of `publi
 
 ```js
 const sass = require('sass');
-const assetFunctions = require('@localnerve/sass-asset-functions');
+const { default: assetFunctions } = require('@localnerve/sass-asset-functions');
 
 const result = sass.compile(scss_filename, {
   functions: assetFunctions({
@@ -104,7 +104,7 @@ Example using the node-sass compiler using the new option `sass`.
 
 ```js
 const sass = require('node-sass');
-const assetFunctions = require('@localnerve/sass-asset-functions');
+const { default: assetFunctions } = require('@localnerve/sass-asset-functions');
 
 const result = sass.compile(scss_filename, {
   functions: assetFunctions({ sass })
@@ -153,7 +153,7 @@ const sass = require('sass');
 const path = require('path');
 const fs = require('fs');
 const hexdigest = require('hexdigest');
-const assetFunctions = require('@localnerve/sass-asset-functions');
+const { default: assetFunctions } = require('@localnerve/sass-asset-functions');
 
 const result = sass.compile(scss_filename, {
   functions: assetFunctions({
