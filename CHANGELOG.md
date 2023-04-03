@@ -1,5 +1,9 @@
 # Sass Asset Functions Change Log
 
+## 3.1.0
+  * Dependency Update
+  * sass 1.60.0
+
 ## 3.0.0
 * **Breaking Change**
 > ESM require support now requires destructuring `default` export.
