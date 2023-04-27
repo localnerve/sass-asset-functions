@@ -1,5 +1,9 @@
 # Sass Asset Functions Change Log
 
+## 3.2.0
+  * Dependency Update
+  * sass 1.62.1
+
 ## 3.1.0
   * Dependency Update
   * sass 1.60.0
