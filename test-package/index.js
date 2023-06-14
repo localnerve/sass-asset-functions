@@ -43,36 +43,44 @@ function runTests () {
   }
 }
 
-// run `npm pack`
-const pack = spawn('npm', ['pack']);
-pack.on('close', packCode => {
-  if (packCode === 0) {
-    // clean any existing local node_modules
-    fs.rmSync(localNodeModulesPath, { force: true, recursive: true });
-    fs.mkdirSync(localNodeModulesPath, { recursive: true });
-    // derive the tar file name from base glob
-    const tarFileName = globSync(tarGlob)[0];
-    // unpack it to local `node_modules`
-    tar.x({
-      C: localNodeModulesPath,
-      file: tarFileName,
-      sync: true
-    });
-    // remove old tar file
-    fs.rmSync(tarFileName);
+// run `npm run transpile`
+const transpile = spawn('npm', ['run', 'transpile']);
+transpile.on('close', transpileCode => {
+  if (transpileCode === 0) {
+    // run `npm pack`
+    const pack = spawn('npm', ['pack']);
+    pack.on('close', packCode => {
+      if (packCode === 0) {
+        // clean any existing local node_modules
+        fs.rmSync(localNodeModulesPath, { force: true, recursive: true });
+        fs.mkdirSync(localNodeModulesPath, { recursive: true });
+        // derive the tar file name from base glob
+        const tarFileName = globSync(tarGlob)[0];
+        // unpack it to local `node_modules`
+        tar.x({
+          C: localNodeModulesPath,
+          file: tarFileName,
+          sync: true
+        });
+        // remove old tar file
+        fs.rmSync(tarFileName);
 
-    // run `npm i` for `node_modules/package`
-    const install = spawn('npm', ['i'], {
-      cwd: `${localNodeModulesPath}/package`
-    });
-    install.on('close', installCode => {
-      if (installCode === 0) {
-        runTests();
+        // run `npm i` for `node_modules/package`
+        const install = spawn('npm', ['i'], {
+          cwd: `${localNodeModulesPath}/package`
+        });
+        install.on('close', installCode => {
+          if (installCode === 0) {
+            runTests();
+          } else {
+            console.error('failed npm install', installCode);
+          }
+        });
       } else {
-        console.error('failed npm install', installCode);
+        console.error('npm pack failed', packCode);
       }
     });
   } else {
-    console.error('npm pack failed', packCode);
+    console.error('npm run transpile failed', transpileCode);
   }
 });
