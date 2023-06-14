@@ -10,7 +10,8 @@
   },
   "type": "module",
   "scripts": {
-    "test": "jest",
+    "test-package": "node ./test-package/index.js",
+    "test": "jest && npm run test-package",
     "lint": "eslint .",
     "pretranspile": "rimraf ./cjs",
     "transpile": "babel index.js -o ./cjs/index.cjs && babel ./lib/processor.js -o ./cjs/lib/processor.cjs",
@@ -49,7 +50,7 @@
   "dependencies": {
     "image-size": "^1.0.2",
     "mime": "^3.0.0",
-    "sass": "^1.63.2"
+    "sass": "^1.63.4"
   },
   "devDependencies": {
     "@babel/cli": "^7.21.5",
@@ -57,7 +58,9 @@
     "rimraf": "^5.0.1",
     "jest": "^29.5.0",
     "eslint": "^8.42.0",
-    "node-sass": "^9.0.0"
+    "node-sass": "^9.0.0",
+    "tar": "^6.1.15",
+    "glob": "^10.2.7"
   },
   "engines": {
     "node": ">= 16"
