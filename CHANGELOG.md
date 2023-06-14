@@ -1,5 +1,9 @@
 # Sass Asset Functions Change Log
 
+## 4.1.0
+  * sass 1.63.2
+  * Dev dependencies updates
+
 ## 4.0.0
   * Node 16+ (Drop Node 14 Support)
   * Dev dependencies updates
