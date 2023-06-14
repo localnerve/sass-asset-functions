@@ -22,9 +22,10 @@ function runTests () {
   const errors = [];
   testFiles.forEach(testFile => {
     const testFileShort = path.basename(testFile);
-    console.log(`=== start test ${testFileShort} ===`);
+    console.log(`=== start ${testFileShort} ===`);
     result = spawnSync('node', [testFile], {
       cwd: __dirname,
+      stdio: 'inherit',
       timeout: 3000
     });
     if (result.status !== 0) {
@@ -34,7 +35,7 @@ function runTests () {
     } else {
       console.log(`${testFileShort} success`);
     }
-    console.log(`=== end test ${testFileShort} ===`);
+    console.log(`=== end ${testFileShort} ===`);
   });
 
   if (errors.length > 0) {
