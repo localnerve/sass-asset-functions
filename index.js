@@ -4,7 +4,7 @@
  * Copyright (c) 2023 Alex Grant (@localnerve), LocalNerve LLC
  * Licensed under the MIT license.
  */
-import defaultSass from 'sass';
+import * as defaultSass from 'sass';
 import Processor from './lib/processor.js';
 
 export default function sassFunctions (options = {}) {
