@@ -1,7 +1,7 @@
 const fs = require('node:fs');
 const util = require('node:util');
+const constants = require('./constants');
 const { default: saf } = require('package');
-const fixtureName = '1997805';
 
 try {
   const res = saf();
@@ -9,11 +9,11 @@ try {
   const inlineImage = vals[1];
 
   inlineImage({
-    getValue: () => `./${fixtureName}.png`
+    getValue: () => `./${constants.fixturePngBasename}`
   }, {
     getValue: () => null
   }, data => {
-    fs.writeFileSync('./test-fixture.txt', util.inspect(data));
+    fs.writeFileSync(`./${constants.fixtureInlineBasename}`, util.inspect(data));
     console.log('OK');
   });
 }

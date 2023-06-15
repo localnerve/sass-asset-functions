@@ -1,7 +1,12 @@
 # Sass Asset Functions Change Log
 
+## 4.1.1
+  * Package test code cleanup
+
 ## 4.1.0
-  * sass 1.63.2
+  * sass 1.63.4
+  * Fix esm loading after unexpected sass api change
+  * Add module loading package tests
   * Dev dependencies updates
 
 ## 4.0.0
