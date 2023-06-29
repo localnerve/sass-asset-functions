@@ -1,5 +1,11 @@
 # Sass Asset Functions Change Log
 
+## 4.1.3
+  * Development dependency updates
+
+## 4.1.2
+  * sass 1.63.6
+
 ## 4.1.1
   * Package test code cleanup
 
