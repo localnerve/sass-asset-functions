@@ -1,5 +1,5 @@
 __tests__
-test-package
+__test-package__
 .github
 coverage
 tmp

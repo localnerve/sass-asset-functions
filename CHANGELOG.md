@@ -1,5 +1,10 @@
 # Sass Asset Functions Change Log
 
+## 4.4.0
+  * sass 1.67.0
+  * Development dependency updates
+  * Rename and update package testing suite
+
 ## 4.3.0
   * sass 1.66.1
   * Development dependency updates

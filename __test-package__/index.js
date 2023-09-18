@@ -90,7 +90,7 @@ function pack () {
 function install () {
   console.log('--- install ---');
   return new Promise((resolve, reject) => {
-    const install = spawn('npm', ['i'], {
+    const install = spawn('npm', ['i', '--production=true'], {
       cwd: `${localNodeModulesPath}/package`
     });
     install.on('close', installCode => {
