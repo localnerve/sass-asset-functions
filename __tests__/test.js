@@ -6,26 +6,28 @@
  */
 /* eslint-env jest */
 
-import fs from 'node:fs';
-import path from 'node:path';
-import otherSass from 'node-sass';
-import defaultSass from 'sass';
+import * as fs from 'node:fs';
+import * as url from 'node:url';
+import * as path from 'node:path';
+import * as otherSass from 'node-sass';
+import * as defaultSass from 'sass';
 import assetFunctions from '../index.js';
 
-const sassDir = path.join(__dirname, 'scss');
-const cssDir = path.join(__dirname, 'css');
+const thisDir = url.fileURLToPath(new URL('.', import.meta.url));
+const sassDir = path.join(thisDir, 'scss');
+const cssDir = path.join(thisDir, 'css');
 const otherSassOpts = { sass: otherSass };
 const files = fs.readdirSync(sassDir);
 
 function renderAsync (file, options = {}, done) {
   const { sass = defaultSass } = options;
 
-  options.images_path = `${__dirname}/images`;
-  options.fonts_path = `${__dirname}/fonts`;
+  options.images_path = `${thisDir}/images`;
+  options.fonts_path = `${thisDir}/fonts`;
 
   return sass.render({
     functions: assetFunctions(options),
-    file: `${__dirname}/scss/${file}` // dart-sass will not find w/o jest testEnvironment 'node'
+    file: `${thisDir}/scss/${file}` // dart-sass will not find w/o jest testEnvironment 'node'
   }, done);
 }
 
