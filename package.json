@@ -11,7 +11,9 @@
   "type": "module",
   "scripts": {
     "test-package": "node ./__test-package__/index.js",
-    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js && npm run test-package",
+    "test-unit": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
+    "test-unit:debug": "node --inspect-brk --experimental-vm-modules node_modules/jest/bin/jest.js",
+    "test": "npm run test-unit && npm run test-package",
     "lint": "eslint .",
     "pretranspile": "rimraf ./cjs",
     "transpile": "babel index.js -o ./cjs/index.cjs && babel ./lib/processor.js -o ./cjs/lib/processor.cjs",
@@ -48,7 +50,7 @@
   },
   "homepage": "https://github.com/localnerve/sass-asset-functions",
   "dependencies": {
-    "image-size": "^1.0.2",
+    "image-size": "^1.1.0",
     "mime-types": "^2.1.35",
     "sass": "^1.69.5"
   },
