@@ -1,5 +1,28 @@
 # Sass Asset Functions Change Log
 
+## 4.7.0
+  * sass 1.69.5
+  * dependency change: mime => mime-types@2.1.35
+  * image-size@1.1.0
+  * Increase coverage, inline-image synchronous readFile to fix error reporting
+  * Development dependency updates
+
+## 4.6.2
+  * sass 1.69.5
+  * Development dependency updates
+
+## 4.6.1
+  * sass 1.69.4
+  * Development dependency updates
+
+## 4.6.0
+  * sass 1.69.3
+  * Development dependency updates
+
+## 4.5.0
+  * sass 1.68.0
+  * Development dependency updates
+
 ## 4.4.0
   * sass 1.67.0
   * Development dependency updates
