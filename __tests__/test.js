@@ -16,8 +16,21 @@ import assetFunctions from '../index.js';
 const thisDir = url.fileURLToPath(new URL('.', import.meta.url));
 const sassDir = path.join(thisDir, 'scss');
 const cssDir = path.join(thisDir, 'css');
+const errDir = path.join(thisDir, 'err');
 const otherSassOpts = { sass: otherSass };
 const files = fs.readdirSync(sassDir);
+
+function renderErr (file, options, done) {
+  const { sass = defaultSass } = options;
+
+  options.images_path = `${thisDir}/images`;
+  options.fonts_path = `${thisDir}/fonts`;
+
+  return sass.render({
+    functions: assetFunctions(options),
+    file: `${thisDir}/err/${file}`
+  }, done);
+}
 
 function renderAsync (file, options = {}, done) {
   const { sass = defaultSass } = options;
@@ -97,6 +110,28 @@ describe('basic', function () {
       run({}, next);
     });
   });
+});
+
+describe('err', function () {
+  const err = fs.readdirSync(errDir);
+  const defaultOpts = {};
+  const errOpts = {
+    'image-url.scss': {
+      asset_host: 'badhost'
+    },
+    'image-url2.scss': {
+      asset_cache_buster: 'badbuster'
+    }
+  };
+  err.forEach(file => {
+    const options = errOpts[file] || defaultOpts;
+    test(file, done => {
+      renderErr(file, options, err => {
+        expect(err).toBeInstanceOf(Error)
+        done();
+      });
+    });
+  })
 });
 
 describe('asset_host', function () {
