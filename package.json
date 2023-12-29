@@ -1,6 +1,6 @@
 {
   "name": "@localnerve/sass-asset-functions",
-  "version": "4.7.0",
+  "version": "4.7.1",
   "description": "compass-style asset functions for dart-sass or other sass compilers",
   "main": "index.js",
   "exports": {
@@ -52,7 +52,7 @@
   "dependencies": {
     "image-size": "^1.1.0",
     "mime-types": "^2.1.35",
-    "sass": "^1.69.5"
+    "sass": "^1.69.6"
   },
   "devDependencies": {
     "@babel/cli": "^7.23.4",
