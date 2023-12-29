@@ -1,5 +1,8 @@
 # Sass Asset Functions Change Log
 
+## 4.7.1
+  * sass 1.69.6
+
 ## 4.7.0
   * sass 1.69.5
   * dependency change: mime => mime-types@2.1.35
