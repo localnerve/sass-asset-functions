@@ -1,7 +1,7 @@
 /**
  * Sass asset function suite.
  * 
- * Copyright (c) 2023 Alex Grant (@localnerve), LocalNerve LLC
+ * Copyright (c) 2023-2024 Alex Grant (@localnerve), LocalNerve LLC
  * Licensed under the MIT license.
  */
 import * as defaultSass from 'sass';

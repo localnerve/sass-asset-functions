@@ -1,3 +1,9 @@
+/**
+ * Package test functions
+ * 
+ * Copyright (c) 2023-2024 Alex Grant (@localnerve), LocalNerve LLC
+ * Licensed under the MIT license.
+ */
 const assert = require('node:assert');
 const fs = require('node:fs');
 const util = require('node:util');

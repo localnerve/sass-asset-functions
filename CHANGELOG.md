@@ -1,5 +1,11 @@
 # Sass Asset Functions Change Log
 
+## 4.7.2
+  * sass 1.69.7
+  * image-size 1.1.1
+  * Development dependency updates
+  * copyright date update
+
 ## 4.7.1
   * sass 1.69.6
 
