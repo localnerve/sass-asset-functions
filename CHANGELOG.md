@@ -1,5 +1,9 @@
 # Sass Asset Functions Change Log
 
+## 4.11.0
+  * sass 1.74.1
+  * Development dependency updates
+
 ## 4.10.0
   * sass 1.72.0
   * Development dependency updates
