@@ -4,7 +4,6 @@
  * Copyright (c) 2023-2024 Alex Grant (@localnerve), LocalNerve LLC
  * Licensed under the MIT license.
  */
-/* global Promise */
 const { spawn, spawnSync } = require('node:child_process');
 const fs = require('node:fs');
 const path = require('node:path');
