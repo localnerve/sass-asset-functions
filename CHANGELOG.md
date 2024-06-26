@@ -1,5 +1,19 @@
 # Sass Asset Functions Change Log
 
+## 5.0.0
+  * node 18+
+  * sass 1.77.6
+  * eslint 9+
+
+## 4.14.0
+  * sass 1.77.1
+
+## 4.13.0
+  * sass 1.76.0
+
+## 4.12.0
+  * sass 1.75.0
+
 ## 4.11.0
   * sass 1.74.1
   * Development dependency updates
