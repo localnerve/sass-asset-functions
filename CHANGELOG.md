@@ -1,5 +1,8 @@
 # Sass Asset Functions Change Log
 
+## 5.0.1
+  * sass 1.77.7
+
 ## 5.0.0
   * node 18+
   * sass 1.77.6
