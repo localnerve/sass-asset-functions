@@ -1,5 +1,8 @@
 # Sass Asset Functions Change Log
 
+## 5.0.3
+  * Development dependency updates
+
 ## 5.0.2
   * sass 1.77.8
 
