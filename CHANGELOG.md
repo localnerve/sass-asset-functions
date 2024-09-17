@@ -1,5 +1,8 @@
 # Sass Asset Functions Change Log
 
+## 5.2.0
+  * sass 1.79.0
+
 ## 5.1.0
   * sass 1.78.0
   * Development dependency updates, development node 20+
