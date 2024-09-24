@@ -9,6 +9,8 @@
   * Dropped explicit support for old node-sass, although it still works thru node 20, for now.
   * To get the old behavior, you have to supply `{ legacyAPI: true }` in the options.
 
+  * sass 1.79.3
+
 ## 5.2.1
   * sass 1.79.2
 
