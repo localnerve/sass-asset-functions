@@ -1,6 +1,7 @@
 # Sass Asset Functions Change Log
 
 ## 6.0.0
+  * sass 1.79.3
   * BREAKING CHANGES:
   * Default supports new JS API (synchronous dartSass.compile).
   * Asynchronous modern JS API (dartSass.compileAsync) available via `async` option.  
@@ -8,8 +9,6 @@
   * Sass Legacy JS API, the default of this lib thru version sass-asset-functions@5, used by nodeSass/dartSass.render, available ONLY via `legacyAPI` option. This will be dropped at dart-sass@2.0.0.
   * Dropped explicit support for old node-sass, although it still works thru node 20, for now.
   * To get the old behavior, you have to supply `{ legacyAPI: true }` in the options.
-
-  * sass 1.79.3
 
 ## 5.2.1
   * sass 1.79.2
