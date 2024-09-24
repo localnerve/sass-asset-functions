@@ -2,11 +2,11 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 
 async function processFile (filename) {
+  const newname = filename.replace(/\.js$/, '.cjs');
+  fs.rename(filename, newname);
   const data = await fs.readFile(filename, 'utf8');
-  const newData = data.replace(/(require\("[a-z./]+)(\.js")(.+)$/mg, (m, req, repl, rest) => {
-    return `${req}.cjs"${rest}`;
-  });
-  await fs.writeFile(filename, newData);
+  const newData = data.replaceAll('.js")', '.cjs")');
+  await fs.writeFile(newname, newData);
 }
 
 async function processDirectory (dir) {

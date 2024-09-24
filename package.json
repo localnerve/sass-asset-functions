@@ -16,7 +16,7 @@
     "test": "npm run test-unit && npm run test-package",
     "lint": "eslint .",
     "pretranspile": "rimraf ./cjs",
-    "transpile": "babel index.js -o ./cjs/index.cjs && babel ./lib/processor.js -o ./cjs/lib/processor.cjs",
+    "transpile": "babel index.js -o ./cjs/index.cjs && babel ./lib --out-dir ./cjs/lib",
     "posttranspile": "node posttranspile.js",
     "prepublishOnly": "npm run transpile"
   },

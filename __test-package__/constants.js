@@ -1,4 +1,5 @@
 module.exports = {
   fixturePngBasename: '1997805.png',
-  fixtureInlineBasename: 'fixture-inline.txt'
+  fixtureLegacyInlineBasename: 'fixture-legacy-inline.txt',
+  fixtureModernInlineBasename: 'fixture-modern-inline.txt'
 };

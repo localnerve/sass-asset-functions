@@ -7,15 +7,16 @@
 const assert = require('node:assert');
 const fs = require('node:fs');
 const util = require('node:util');
+const sass = require('sass');
 const constants = require('./constants');
 
-function testInline (saf) {
+function testInlineLegacy (saf) {
   try {
-    const res = saf();  
+    const res = saf({ legacyAPI: true });
     const vals = Object.values(res);
     const inlineImage = vals[1];
   
-    const fixture = fs.readFileSync(`./${constants.fixtureInlineBasename}`);
+    const fixture = fs.readFileSync(`./${constants.fixtureLegacyInlineBasename}`);
 
     inlineImage({
       getValue: () => `./${constants.fixturePngBasename}`
@@ -27,7 +28,7 @@ function testInline (saf) {
         `Expected ${
           constants.fixturePngBasename
         } to equal ${
-          constants.fixtureInlineBasename
+          constants.fixtureLegacyInlineBasename
         }`
       );
       console.log('OK');
@@ -39,6 +40,68 @@ function testInline (saf) {
   }
 }
 
+function testInlineModernSync (saf) {
+  try {
+    const res = saf();
+    const vals = Object.values(res);
+    const inlineImage = vals[1];
+  
+    const fixture = fs.readFileSync(`./${constants.fixtureModernInlineBasename}`);
+
+    const data = inlineImage([
+      new sass.SassString(`./${constants.fixturePngBasename}`),
+      sass.sassNull
+    ]);
+
+    const result = util.inspect(data);
+    assert.equal(result, fixture,
+      `Expected ${
+        constants.fixturePngBasename
+      } to equal ${
+        constants.fixtureModernInlineBasename
+      }`
+    );
+    console.log('OK');
+  }
+  catch(e) {
+    console.error(e);
+    throw e;
+  }
+}
+
+function testInlineModernAsync (saf) {
+  try {
+    const res = saf({ async: true });
+    const vals = Object.values(res);
+    const inlineImage = vals[1];
+  
+    const fixture = fs.readFileSync(`./${constants.fixtureModernInlineBasename}`);
+
+    inlineImage([
+      new sass.SassString(`./${constants.fixturePngBasename}`),
+      sass.sassNull
+    ]).then(data => {
+      const result = util.inspect(data);
+      assert.equal(result, fixture,
+        `Expected ${
+          constants.fixturePngBasename
+        } to equal ${
+          constants.fixtureModernInlineBasename
+        }`
+      );
+      console.log('OK');
+    }).catch(err => {
+      throw err;
+    });
+  }
+  catch(e) {
+    console.error(e);
+    throw e;
+  }
+}
+
 module.exports = {
-  testInline
+  testInlineLegacy,
+  testInlineModernSync,
+  testInlineModernAsync
 };
