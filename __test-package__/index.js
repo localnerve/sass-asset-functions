@@ -60,7 +60,10 @@ function transpile () {
       } else {
         reject(`npm run transpile failed: ${transpileCode}`);
       }
-    });    
+    });
+    transpile.on('error', err => {
+      reject(err);
+    })
   });
 }
 
@@ -79,6 +82,9 @@ function pack () {
         reject(`npm pack failed: ${packCode}`);
       }
     });
+    pack.on('error', err => {
+      reject(err);
+    })
   });
 }
 
@@ -99,6 +105,9 @@ function install () {
         reject(`failed npm install: ${installCode}`);
       }
     });
+    install.on('error', err => {
+      reject(err);
+    })
   });
 }
 
@@ -136,4 +145,8 @@ transpile()
   .then(pack)
   .then(extractTarPackage)
   .then(install)
-  .then(runTests);
+  .then(runTests)
+  .catch(e => {
+    console.error('Package Testing Failure');
+    console.error(e);
+  });
