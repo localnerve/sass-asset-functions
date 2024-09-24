@@ -149,4 +149,5 @@ transpile()
   .catch(e => {
     console.error('Package Testing Failure');
     console.error(e);
+    throw e;
   });
