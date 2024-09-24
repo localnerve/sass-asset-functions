@@ -1,4 +1,10 @@
 import saf from 'package';
-import { testInline } from './functions.js';
+import {
+  testInlineLegacy,
+  testInlineModernSync,
+  testInlineModernAsync
+} from './functions.js';
 
-testInline(saf);
+testInlineLegacy(saf);
+testInlineModernSync(saf);
+testInlineModernAsync(saf);

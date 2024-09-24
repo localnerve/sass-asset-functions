@@ -1,6 +1,6 @@
 {
   "name": "@localnerve/sass-asset-functions",
-  "version": "5.2.1",
+  "version": "6.0.0",
   "description": "compass-style asset functions for dart-sass or other sass compilers",
   "main": "index.js",
   "exports": {
@@ -16,7 +16,7 @@
     "test": "npm run test-unit && npm run test-package",
     "lint": "eslint .",
     "pretranspile": "rimraf ./cjs",
-    "transpile": "babel index.js -o ./cjs/index.cjs && babel ./lib/processor.js -o ./cjs/lib/processor.cjs",
+    "transpile": "babel index.js -o ./cjs/index.cjs && babel ./lib --out-dir ./cjs/lib",
     "posttranspile": "node posttranspile.js",
     "prepublishOnly": "npm run transpile"
   },
@@ -52,13 +52,13 @@
   "dependencies": {
     "image-size": "^1.1.1",
     "mime-types": "^2.1.35",
-    "sass": "^1.79.2"
+    "sass": "^1.79.3"
   },
   "devDependencies": {
     "@babel/cli": "^7.25.6",
     "@babel/preset-env": "^7.25.4",
-    "@eslint/js": "^9.10.0",
-    "eslint": "^9.10.0",
+    "@eslint/js": "^9.11.1",
+    "eslint": "^9.11.1",
     "eslint-plugin-jest": "^28.8.3",
     "glob": "^11.0.0",
     "globals": "^15.9.0",

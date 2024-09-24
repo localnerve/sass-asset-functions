@@ -21,6 +21,10 @@ _**NB** Please note that the `functions` option of dart-sass/node-sass is still 
 
 This module provides some of the asset functions that came with [Compass](http://compass-style.org). Originally a fork of  [node-sass-asset-functions](https://github.com/fetch/node-sass-asset-functions) that was never merged.
 
+## Release Notes
+
+[Changelog](CHANGELOG.md)
+
 ## Functions Exposed to Sass
 
 - `image-url($filename: null, $only_path: false)`
@@ -63,6 +67,8 @@ All options are optional.
 | name | type | description |
 | --- | --- | --- |
 | `sass` | Object | A reference to an alternate Sass compiler to use other than dart-sass (must expose `types`). Defaults to `undefined` and a dart-sass reference is used |
+| `legacyAPI` | Boolean | truthy to use the legacy sass API via the `render` function. Defaults to `false` |
+| `async` | Boolean | truthy to use modern sass API via the `compileAsync` function. Required if supplied `asset_cache_buster` or `asset_host` function options are asynchronous. Defaults to `false` |
 | `images_path` | String | The build-time file path to images. Defaults to `public/images` |
 | `fonts_path` | String | The build-time file path to fonts. Defaults to `public/fonts` |
 | `http_images_path` | String | The path to images as seen from the web (nothing to do with http). Defaults to `/images` |

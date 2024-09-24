@@ -1,5 +1,11 @@
-const { testInline } = require('./functions');
+const {
+  testInlineLegacy,
+  testInlineModernSync,
+  testInlineModernAsync
+} = require('./functions');
 
 import('package').then(({ default: saf }) => {
-  testInline(saf);
+  testInlineLegacy(saf);
+  testInlineModernSync(saf);
+  testInlineModernAsync(saf);
 });

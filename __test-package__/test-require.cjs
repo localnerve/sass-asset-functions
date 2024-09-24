@@ -1,4 +1,10 @@
 const { default: saf } = require('package');
-const { testInline } = require('./functions');
+const {
+  testInlineLegacy,
+  testInlineModernSync,
+  testInlineModernAsync
+} = require('./functions');
 
-testInline(saf);
+testInlineLegacy(saf);
+testInlineModernSync(saf);
+testInlineModernAsync(saf);
