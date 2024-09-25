@@ -67,7 +67,7 @@ All options are optional.
 | name | type | description |
 | --- | --- | --- |
 | `sass` | Object | A reference to an alternate Sass compiler to use other than dart-sass (must expose `types`). Defaults to `undefined` and a dart-sass reference is used |
-| `legacyAPI` | Boolean | truthy to use the legacy sass API via the `render` function. Defaults to `false` |
+| `legacyAPI` | Boolean | truthy to use the legacy sass API via the sass `render` function. Defaults to `false` |
 | `async` | Boolean | truthy to use modern sass API via the `compileAsync` function. Required if supplied `asset_cache_buster` or `asset_host` function options are asynchronous. Defaults to `false` |
 | `images_path` | String | The build-time file path to images. Defaults to `public/images` |
 | `fonts_path` | String | The build-time file path to fonts. Defaults to `public/fonts` |
@@ -161,8 +161,9 @@ const fs = require('fs');
 const hexdigest = require('hexdigest');
 const { default: assetFunctions } = require('@localnerve/sass-asset-functions');
 
-const result = sass.compile(scss_filename, {
+const result = sass.compileAsync(scss_filename, {
   functions: assetFunctions({
+    async: true,
     asset_cache_buster: (http_path, real_path, done) => {
       hexdigest(real_path, 'sha1', (err, digest) => {
         if (err) {
