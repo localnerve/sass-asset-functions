@@ -1,5 +1,12 @@
 # Sass Asset Functions Change Log
 
+## 6.0.2
+  * sass 1.79.4
+  * add build/publish provenance
+
+## 6.0.1
+  * bug fix, quoted results
+
 ## 6.0.0
   * sass 1.79.3
   * BREAKING CHANGES:
