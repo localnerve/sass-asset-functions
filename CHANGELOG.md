@@ -1,5 +1,8 @@
 # Sass Asset Functions Change Log
 
+## 6.5.0
+  * image-size 1.2.0, add jpeg-xl support
+
 ## 6.4.0
   * sass 1.83.0
 
