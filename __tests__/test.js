@@ -1,7 +1,7 @@
 /**
  * Test driver.
  * 
- * Copyright (c) 2023-2024 Alex Grant (@localnerve), LocalNerve LLC
+ * Copyright (c) 2023-2025 Alex Grant (@localnerve), LocalNerve LLC
  * Licensed under the MIT license.
  */
 /* eslint-env jest */

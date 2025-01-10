@@ -1,5 +1,8 @@
 # Sass Asset Functions Change Log
 
+## 6.5.2
+  * license date update
+
 ## 6.5.1
   * sass 1.83.1
 
