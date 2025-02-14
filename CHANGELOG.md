@@ -1,5 +1,8 @@
 # Sass Asset Functions Change Log
 
+## 6.7.0
+  * sass 1.85.0
+
 ## 6.6.0
   * sass 1.84.0
 
