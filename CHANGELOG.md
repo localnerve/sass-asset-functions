@@ -1,5 +1,9 @@
 # Sass Asset Functions Change Log
 
+## 6.8.0
+  * sass 1.85.1
+  * image-size 2.0.0, add heif, tiff64, bigtiff support
+
 ## 6.7.0
   * sass 1.85.0
 
