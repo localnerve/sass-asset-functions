@@ -87,7 +87,8 @@ You can specify the paths to your resources using the following options (shown w
   images_path: 'public/images', // local directory
   fonts_path: 'public/fonts',
   http_images_path: '/images', // web path
-  http_fonts_path: '/fonts'
+  http_fonts_path: '/fonts',
+  data: {}
 }
 ```
 
@@ -120,39 +121,9 @@ const result = sass.compile(scss_filename, {
 });
 ```
 
-#### `asset_host`: a function which completes with a string used as asset host.
+#### `lookup`: a function to use arbitrary data in sass stylesheets
 
-```js
-const result = sass.compile(scss_filename, {
-  functions: assetFunctions({
-    asset_host: (http_path, done) => {
-      done('http://assets.example.com');
-      // or use the supplied path to calculate a host
-      done(`http://assets${http_path.length % 4}.example.com`);
-    }
-  })
-  [, options...]
-});
-```
-
-#### `asset_cache_buster`: a function to rewrite the asset path
-
-When this function returns a string, it's set as the query of the path. When returned an object, `path` and `query` will be used.
-
-```js
-const result = sass.compile(scss_filename, {
-  functions: assetFunctions({
-    asset_cache_buster: (http_path, real_path, done) => {
-      done('v=123');
-    }
-  })
-  [, options...]
-});
-```
-
-#### `lookup`: a function to use arbitrary data in scss stylesheets
-
-This function retrieves arbitrary build-time data for reference in stylesheet compilation. Could be an asset name, prefix, or could be a whole list or map of things. Here's the list of javascript types supported (everything returns SassNull):
+This function retrieves arbitrary build-time data for reference in stylesheet compilation. Could be an asset name, prefix, or could be a whole list or map of things. Here's the list of javascript type mappings (everything else returns SassNull):
   * Boolean => SassBoolean
   * Number => SassNumber
   * String => SassString
@@ -201,7 +172,37 @@ $nested-data: lookup('nested', 'process-map');
 }
 ```
 
-##### A more advanced example:
+#### `asset_host`: a function which completes with a string used as asset host.
+
+```js
+const result = sass.compile(scss_filename, {
+  functions: assetFunctions({
+    asset_host: (http_path, done) => {
+      done('http://assets.example.com');
+      // or use the supplied path to calculate a host
+      done(`http://assets${http_path.length % 4}.example.com`);
+    }
+  })
+  [, options...]
+});
+```
+
+#### `asset_cache_buster`: a function to rewrite the asset path
+
+When this function returns a string, it's set as the query of the path. When returned an object, `path` and `query` will be used.
+
+```js
+const result = sass.compile(scss_filename, {
+  functions: assetFunctions({
+    asset_cache_buster: (http_path, real_path, done) => {
+      done('v=123');
+    }
+  })
+  [, options...]
+});
+```
+
+##### A more advanced example of `asset_cache_buster`:
 
 Here we include the file's  hexdigest in the path, using the [`hexdigest`](https://github.com/koenpunt/node-hexdigest) module.
 
