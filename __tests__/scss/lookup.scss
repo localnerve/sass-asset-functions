@@ -1,0 +1,48 @@
+body {
+  content: '#{lookup('one', 'two')}';
+}
+section {
+  content: '#{lookup('one', 'three')}';
+}
+.bool {
+  content: '#{lookup('one', 'bool')}';
+}
+.this-#{lookup('kebab-name-style')} {
+  display: inline;
+}
+.null {
+  content: '#{lookup()}';
+}
+.null-inside {
+  content: '#{lookup('one', 'not-found')}';
+}
+$list-set: lookup('one', 'set');
+@each $setItem in $list-set {
+  .class-set-#{$setItem} {
+    content: '#{$setItem}';
+  }
+}
+$list: lookup('one', 'four');
+@each $listItem in $list {
+  .class-#{$listItem} {
+    content: '#{$listItem}';
+  }
+}
+$map: lookup('one', 'five');
+@each $key, $val in $map {
+  .icon-#{$key}::before {
+    display: inline-block;
+    content: $val;
+  }
+}
+$map-Map: lookup('one', 'map');
+@each $key, $val in $map-Map {
+  .select-#{$key}::after {
+    display: block;
+    content: $val;
+  }
+}
+$image-name: lookup('image-name');
+.test-image {
+  background-image: image-url($image-name);
+}

@@ -1,5 +1,8 @@
 # Sass Asset Functions Change Log
 
+## 6.10.0
+  * added `lookup` function, arbitrary `data` option
+
 ## 6.9.0
   * sass 1.86.0
   * image-size 2.0.1

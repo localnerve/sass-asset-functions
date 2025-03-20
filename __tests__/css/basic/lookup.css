@@ -1,0 +1,54 @@
+body {
+  content: "Hello World"; }
+section {
+  content: "true";
+}
+.bool {
+  content: "false";
+}
+.this-works-and-is-ok {
+  display: inline;
+}
+.null {
+  content: '';
+}
+.null-inside {
+  content: '';
+}
+.class-set-junk {
+  content: 'junk';
+}
+.class-set-10 {
+  content: '10';
+}
+.class-0 {
+  content: "0";
+}
+.class-1 {
+  content: "1";
+}
+.class-2 {
+  content: "2";
+}
+.class-3 {
+  content: "3";
+}
+.icon-one::before {
+  display: inline-block;
+  content: "one";
+}
+.icon-two::before {
+  display: inline-block;
+  content: "two";
+}
+.select-key0::after {
+  display: block;
+  content: "value0";
+}
+.select-key1::after {
+  display: block;
+  content: "20";
+}
+.test-image {
+  background-image: url('/images/barney.gif');
+}
