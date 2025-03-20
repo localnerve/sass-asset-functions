@@ -23,6 +23,22 @@ const files = fs.readdirSync(sassDir);
 function assignBasicOpts (options) {
   options.images_path = `${thisDir}/images`;
   options.fonts_path = `${thisDir}/fonts`;
+  options.data = {
+    one: {
+      two: 'Hello World',
+      three: true,
+      bool: false,
+      four: [0,1,2,3],
+      five: {
+        one: 'one',
+        two: 'two'
+      },
+      set: new Set(['junk', 10]),
+      map: new Map([['key0', 'value0'], ['key1', 20]])
+    },
+    'kebab-name-style': 'works-and-is-ok',
+    'image-name': 'barney.gif'
+  };
 }
 
 function render (file, options = {}) {

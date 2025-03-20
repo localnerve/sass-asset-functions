@@ -33,6 +33,7 @@ This module provides some of the asset functions that came with [Compass](http:/
 - `font-url($filename: null, $only-path: false)`
 - `font-files($filenames...)`
 - `inline-image($filename: null, $mime-type: null)`
+- `lookup($keys...)`
 
 ## Usage
 
@@ -75,6 +76,7 @@ All options are optional.
 | `http_fonts_path` | String | The path to images as seen from the web (nothing to do with http). Defaults to `/fonts` |
 | `asset_cache_buster` | Function | Signature (http_path, real_path, callback(new_url)). Supply to perform url transform for `image-url` or `font-url`, presumably for asset cache busting, but useful for any change to the url path (before fragment) |
 | `asset_host` | Function | Signature (http_path, callback(new_url)). Supply to perform url transform for `image-url` or `font-url`, presumably to define an asset host, but useful for any change to the url before the path |
+| `data` | Object | An object of arbitrary data to reference at build-time. Defaults to `(empty)` |
 
 ### Examples
 
@@ -146,6 +148,57 @@ const result = sass.compile(scss_filename, {
   })
   [, options...]
 });
+```
+
+#### `lookup`: a function to use arbitrary data in scss stylesheets
+
+This function retrieves arbitrary build-time data for reference in stylesheet compilation. Could be an asset name, prefix, or could be a whole list or map of things. Here's the list of javascript types supported (everything returns SassNull):
+  * Boolean => SassBoolean
+  * Number => SassNumber
+  * String => SassString
+  * Array => SassList
+  * Set => SassList
+  * Object => SassMap
+  * Map => SassMap
+
+```js
+const result = sass.compile(scss_filename, {
+  functions: assetFunctions({
+    data: {
+      'hero-image-names': {
+        big: 'hero-1920x300.webp',
+        medium: 'hero-1440x300.webp',
+        small: 'hero-1024x300.webp'
+      },
+      nested: {
+        process: true,
+        'process-map': {
+          one: 'one',
+          two: 'two'
+        }
+      }
+    }
+  })
+});
+```
+
+```scss
+$hero-images: lookup('hero-image-names');
+@each $key, $val in $hero-images {
+  .hero-image-#{$key} {
+    background-image: image-url($val);
+  }
+}
+
+$nested-process: lookup('nested', 'process');
+$nested-data: lookup('nested', 'process-map');
+@if $nested-process {
+  @each $key, $val in $nested-data {
+    .process-#{$key} {
+      content: '#{$val}';
+    }
+  }
+}
 ```
 
 ##### A more advanced example:
