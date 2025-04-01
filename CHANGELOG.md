@@ -1,5 +1,10 @@
 # Sass Asset Functions Change Log
 
+## 6.11.0
+ * immutable 5.1.1
+ * mime-types 3.0.1
+ * sass 1.86.1
+
 ## 6.10.0
   * added `lookup` function, arbitrary `data` option
 
