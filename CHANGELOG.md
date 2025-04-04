@@ -1,5 +1,8 @@
 # Sass Asset Functions Change Log
 
+## 6.11.2
+  * asss 1.86.3
+
 ## 6.11.1
   * image-size 2.0.2
   * sass 1.86.2
