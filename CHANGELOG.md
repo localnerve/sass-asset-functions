@@ -1,5 +1,9 @@
 # Sass Asset Functions Change Log
 
+## 6.13.0
+  * sass 1.88.0
+  * immutable 5.1.2
+
 ## 6.12.0
   * sass 1.87.0
 
