@@ -9,7 +9,6 @@
 import * as fs from 'node:fs';
 import * as url from 'node:url';
 import * as path from 'node:path';
-import * as otherSass from 'node-sass';
 import * as defaultSass from 'sass';
 import assetFunctions from '../index.js';
 
@@ -17,7 +16,6 @@ const thisDir = url.fileURLToPath(new URL('.', import.meta.url));
 const sassDir = path.join(thisDir, 'scss');
 const cssDir = path.join(thisDir, 'css');
 const errDir = path.join(thisDir, 'err');
-const otherSassOpts = { sass: otherSass, checkResult: checkCompileResult };
 const files = fs.readdirSync(sassDir);
 
 function assignBasicOpts (options) {
@@ -199,12 +197,6 @@ describe('basic', function () {
   });
 });
 
-describe('basic:node-sass', function () {
-  test.each(files)('%s', file => {
-    return equalsFileAsync(file, 'basic', otherSassOpts);
-  });
-});
-
 describe('err:legacy', function () {
   const input = makeErrorInput();
   test.failing.each(input.errFiles)('%s', file => {
@@ -256,15 +248,6 @@ describe('asset_host:async', function () {
   });
 });
 
-describe('asset_host:node-sass', function () {
-  test.each(files)('%s', file => {
-    return equalsFileAsync(file, 'asset_host', {
-      ...otherSassOpts,
-      asset_host
-    });
-  });
-});
-
 describe('asset_cache_buster', function () {
   describe('using query', function () {
     test.each(files)('%s', file => {
@@ -285,16 +268,6 @@ describe('asset_cache_buster', function () {
     });
   });
 
-  describe('using query:node-sass', function () {
-    test.each(files)('%s', file => {
-      return equalsFileAsync(file, 'asset_cache_buster/query', {
-        ...otherSassOpts,
-        asset_cache_buster: asset_cache_buster_query,
-        checkResult: checkCompileResult
-      });
-    });
-  });
-
   describe('using path', function () {
     test.each(files)('%s', file => {
       return equalsFileAsync(file, 'asset_cache_buster/path', {
@@ -310,15 +283,6 @@ describe('asset_cache_buster', function () {
         asset_cache_buster: asset_cache_buster_path_async,
         checkResult: checkCompileResult,
         async: true
-      });
-    });
-  });
-
-  describe('using path:node-sass', function () {
-    test.each(files)('%s', file => {
-      return equalsFileAsync(file, 'asset_cache_buster/path', {
-        asset_cache_buster: asset_cache_buster_path,
-        ...otherSassOpts
       });
     });
   });
