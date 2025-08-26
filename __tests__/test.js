@@ -10,13 +10,28 @@ import * as fs from 'node:fs';
 import * as url from 'node:url';
 import * as path from 'node:path';
 import * as defaultSass from 'sass';
-import assetFunctions from '../index.js';
 
 const thisDir = url.fileURLToPath(new URL('.', import.meta.url));
 const sassDir = path.join(thisDir, 'scss');
 const cssDir = path.join(thisDir, 'css');
 const errDir = path.join(thisDir, 'err');
 const files = fs.readdirSync(sassDir);
+let assetFunctions;
+
+/**
+ * Node 24 doesn't like when I statically import the module under test.
+ */
+async function getLib () {
+  const { default: assetFunctionsFactory } = await import('../index.js');
+  assetFunctions = assetFunctionsFactory;
+}
+
+/**
+ * Node 24 doesn't like when I statically import the module under test.
+ */
+beforeAll(async () => {
+  await getLib();
+});
 
 function assignBasicOpts (options) {
   options.images_path = `${thisDir}/images`;

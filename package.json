@@ -11,8 +11,8 @@
   "type": "module",
   "scripts": {
     "test-package": "node ./__test-package__/index.js",
-    "test-unit": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
-    "test-unit:debug": "node --inspect-brk --experimental-vm-modules node_modules/jest/bin/jest.js",
+    "test-unit": "node --experimental-vm-modules node_modules/.bin/jest",
+    "test-unit:debug": "node --inspect-brk --experimental-vm-modules node_modules/./bin/test",
     "test": "npm run test-unit && npm run test-package",
     "lint": "eslint .",
     "pretranspile": "rimraf ./cjs",
