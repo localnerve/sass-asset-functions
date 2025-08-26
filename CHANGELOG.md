@@ -1,5 +1,12 @@
 # Sass Asset Functions Change Log
 
+# 7.1.0
+  * sass 1.91.0
+
+# 7.0.0
+  * Node 20+
+  * Drop testing for node-sass
+
 ## 6.15.0
   * sass 1.90.0
   * immutable 5.1.3
