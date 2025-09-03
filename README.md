@@ -1,23 +1,18 @@
 # Sass Asset Functions
 
-> Supplies a set of functions to Sass that keep physical asset location details out of your source code. Also allows one to define a cache-busting policy or specify asset hosts by url.
+> Supplies a set of functions to Sass that keep physical asset location details out of your source code. Allows one to define a cache-busting policy, specify asset hosts by url, and use arbitrary build-time metadata to drive css generation.
 
 ![Verify](https://github.com/localnerve/sass-asset-functions/workflows/Verify/badge.svg)
 [![npm version](https://badge.fury.io/js/%40localnerve%2Fsass-asset-functions.svg)](https://badge.fury.io/js/%40localnerve%2Fsass-asset-functions)
 [![Coverage Status](https://coveralls.io/repos/github/localnerve/sass-asset-functions/badge.svg?branch=master)](https://coveralls.io/github/localnerve/sass-asset-functions?branch=master)
 
-This module supplies functions to a Sass compiler which can be called from your Sass code.
-For example, the `image-url` used here in place of `url` adds build-time configuration to resolve the file to the proper location as seen from the web:
+## Overview
 
-```css
-.some-selector {
-  background-image: image-url('cat.jpg');
-}
-```
+This module provides a set of Sass functions that help with asset management in web projects, similar to what Compass provided. You can use functions like `image-url()` instead of plain `url()` and the module will automatically resolve paths correctly based on your build configuration. Further, you can expose arbitrary built-time metadata (typically from image processors) for use in sass to generate image references, dimensions, types, breakpoints, etc.
 
-_**NB** Please note that the `functions` option of dart-sass/node-sass is still experimental (>= v3.0.0)._
+_This is a sass compiler plugin that uses the [functions](https://sass-lang.com/documentation/js-api/interfaces/options/#functions) option of the sass javascript api. Supports modern and legacy sass javascript api: `render`, `compile`, and `compileAsync`_
 
-## Origin
+## Origin/History
 
 This module provides some of the asset functions that came with [Compass](http://compass-style.org). Originally a fork of  [node-sass-asset-functions](https://github.com/fetch/node-sass-asset-functions) that was never merged.
 
@@ -78,6 +73,12 @@ All options are optional.
 | `asset_host` | Function | Signature (http_path, callback(new_url)). Supply to perform url transform for `image-url` or `font-url`, presumably to define an asset host, but useful for any change to the url before the path |
 | `data` | Object | An object of arbitrary data to reference at build-time. Defaults to `(empty)` |
 
+### Advanced Options Quick Links
+
+* **[Asset Cache Buster](#asset_cache_buster-a-function-to-rewrite-the-asset-path):** Modify URLs for cache busting (e.g., adding version numbers)
+* **[Asset Host](#asset_host-a-function-which-completes-with-a-string-used-as-asset-host):** Set custom hostnames for assets
+* **[Data Lookup](#lookup-a-function-to-use-arbitrary-data-in-sass-stylesheets):** Pass arbitrary data from JavaScript to Sass via the lookup() function
+
 ### Examples
 
 You can specify the paths to your resources using the following options (shown with defaults):
@@ -85,10 +86,10 @@ You can specify the paths to your resources using the following options (shown w
 ```js
 {
   images_path: 'public/images', // local directory
-  fonts_path: 'public/fonts',
-  http_images_path: '/images', // web path
-  http_fonts_path: '/fonts',
-  data: {}
+  http_images_path: '/images',  // map to web path
+  fonts_path: 'public/fonts',   // local directory
+  http_fonts_path: '/fonts',    // map to web path
+  data: {}                      // build data exposed by *lookup*
 }
 ```
 
@@ -100,23 +101,9 @@ const { default: assetFunctions } = require('@localnerve/sass-asset-functions');
 
 const result = sass.compile(scss_filename, {
   functions: assetFunctions({
-    images_path: 'public/img',
-    http_images_path: '/images'
+    images_path: 'public/img',  // the local path to the assets 
+    http_images_path: '/images' // the path from the browser to the assets
   })
-  [, options...]
-});
-```
-
-#### `sass`: Overriding the default compiler with Node-Sass
-
-Example using the node-sass compiler using the new option `sass`.
-
-```js
-const sass = require('node-sass');
-const { default: assetFunctions } = require('@localnerve/sass-asset-functions');
-
-const result = sass.compile(scss_filename, {
-  functions: assetFunctions({ sass })
   [, options...]
 });
 ```
@@ -237,6 +224,22 @@ const result = sass.compileAsync(scss_filename, {
 });
 ```
 
+#### `sass`: Overriding the default compiler with Node-Sass
+
+Example using the node-sass compiler using the new option `sass`.
+
+```js
+const sass = require('node-sass');
+const { default: assetFunctions } = require('@localnerve/sass-asset-functions');
+
+const result = sass.compile(scss_filename, {
+  functions: assetFunctions({ sass })
+  [, options...]
+});
+```
+
+_As of version 7.0.0, node-sass integration is no longer tested_
+
 ## Contributing
 
 1. Fork it
@@ -244,3 +247,7 @@ const result = sass.compileAsync(scss_filename, {
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
+
+## License
+
+* [MIT](LICENSE.md)
