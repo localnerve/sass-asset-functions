@@ -22,9 +22,9 @@ jobs:
     - run: npm ci
     - name: Run Lint and Test
       run: npm run lint && npm test
-    - name: Coverage Upload
-      if: ${{ success() }}
-      uses: coverallsapp/github-action@master
-      with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
-        path-to-lcov: ./coverage/lcov.info
+    # - name: Coverage Upload
+    #  if: ${{ success() }}
+    #  uses: coverallsapp/github-action@master
+    #  with:
+    #    github-token: ${{ secrets.GITHUB_TOKEN }}
+    #    path-to-lcov: ./coverage/lcov.info
