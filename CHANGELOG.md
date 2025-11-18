@@ -1,5 +1,8 @@
 # Sass Asset Functions Change Log
 
+# 7.5.1
+  * sass 1.94.1
+
 # 7.5.0
   * sass 1.94.0
 
