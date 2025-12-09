@@ -1,6 +1,9 @@
 # Sass Asset Functions Change Log
 
-#7.5.2
+# 7.6.0
+  * sass 1.95.0
+
+# 7.5.2
   * sass 1.94.2
   * mime-types 3.0.2
 
