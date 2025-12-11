@@ -1,5 +1,9 @@
 # Sass Asset Functions Change Log
 
+# 7.7.0
+  * sass 1.96.0
+  * oidc npm deploy
+
 # 7.6.1
   * sass 1.95.1
 
