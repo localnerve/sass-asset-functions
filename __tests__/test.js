@@ -4,7 +4,6 @@
  * Copyright (c) 2023-2025 Alex Grant (@localnerve), LocalNerve LLC
  * Licensed under the MIT license.
  */
-/* eslint-env jest */
 import * as fs from 'node:fs';
 import * as url from 'node:url';
 import * as path from 'node:path';
