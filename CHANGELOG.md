@@ -1,5 +1,12 @@
 # Sass Asset Functions Change Log
 
+# 7.8.5
+  * sass 1.98.0
+  * immutable 5.1.5
+
+# 7.8.4
+  * devdeps, eslint 10+
+
 # 7.8.3
   * sass 1.97.3
 
