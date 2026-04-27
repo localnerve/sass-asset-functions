@@ -43,7 +43,7 @@ export default [{
     'n/no-unsupported-features/node-builtins': 'off',
     // Allow devDependencies in tests
     'n/no-extraneous-require': ['error', {
-      'allowModules': ['sass', 'tar'] // Or just disable it for tests entirely
+      'allowModules': ['sass', 'tar', 'glob']
     }],
     'n/no-extraneous-import': ['error', {
       'allowModules': ['sass']

@@ -7,6 +7,7 @@
 const { spawn, spawnSync } = require('node:child_process');
 const fs = require('node:fs');
 const path = require('node:path');
+const { globSync } = require('glob');
 const tar = require('tar');
 const thisDirname = __dirname;
 const localNodeModulesPath = path.join(thisDirname, 'node_modules');
@@ -19,7 +20,7 @@ function runTests () {
 
   const testGlob = path.join(thisDirname, 'test-*');
   const errors = [];
-  const testFiles = fs.globSync(testGlob);
+  const testFiles = globSync(testGlob);
   let result;
   
   testFiles.forEach(testFile => {
@@ -117,7 +118,7 @@ function extractTarPackage () {
   console.log('--- extract ---');
 
   const tarGlob = 'localnerve-sass-asset-functions*';
-  const tarFileName = fs.globSync(tarGlob)[0];
+  const tarFileName = globSync(tarGlob)[0];
 
   // clean any existing local node_modules
   fs.rmSync(localNodeModulesPath, { force: true, recursive: true });
