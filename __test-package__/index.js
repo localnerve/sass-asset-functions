@@ -7,8 +7,8 @@
 const { spawn, spawnSync } = require('node:child_process');
 const fs = require('node:fs');
 const path = require('node:path');
-const tar = require('tar');
 const { globSync } = require('glob');
+const tar = require('tar');
 const thisDirname = __dirname;
 const localNodeModulesPath = path.join(thisDirname, 'node_modules');
 

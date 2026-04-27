@@ -1,5 +1,9 @@
 # Sass Asset Functions Change Log
 
+# 7.11.0
+  * standard URL processing, deprecate messages for old api if needed
+  * devdeps - remove jest, rimraf, new lint rules, bump gha
+
 # 7.10.0
   * sass 1.99.0
   * devdeps

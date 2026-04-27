@@ -1,6 +1,8 @@
 import js from '@eslint/js';
 import globals from 'globals';
-import jest from 'eslint-plugin-jest';
+import nodePlugin from 'eslint-plugin-n';
+
+const nodeRules = nodePlugin.configs['flat/recommended'].rules;
 
 export default [{
   name: 'global',
@@ -11,28 +13,54 @@ export default [{
     'node_modules/**'
   ]
 }, {
-  name: 'lib-test-package',
+  plugins: { n: nodePlugin },
+  name: 'lib',
   files: [
-    '*.js',
-    'lib/**',
-    '__test-package__/**'
+    'index.js',
+    'lib/**'
   ],
-  rules: js.configs.recommended.rules,
+  rules: {
+    ...js.configs.recommended.rules,
+    ...nodeRules
+  },
   languageOptions: {
     globals: {
       ...globals.node
     }
   }
 }, {
-  name: 'tests',
+  plugins: { n: nodePlugin },
+  name: 'dev',
   files: [
-    '__tests__/**'
+    '__tests__/**',
+    '__test-package__/**',
+    'eslint.config.js',
+    'posttranspile.js'
   ],
-  ...jest.configs['flat/recommended'],
   rules: {
-    ...jest.configs['flat/recommended'].rules,
-    'jest/no-done-callback': 'off',
-    'jest/expect-expect': 'off',
-    'jest/valid-title': 'off'
+    ...js.configs.recommended.rules,
+    ...nodeRules,
+    'n/no-unsupported-features/node-builtins': 'off',
+    // Allow devDependencies in tests
+    'n/no-extraneous-require': ['error', {
+      'allowModules': ['sass', 'tar', 'glob']
+    }],
+    'n/no-extraneous-import': ['error', {
+      'allowModules': ['sass']
+    }],
+    // Allow unpublished imports
+    'n/no-unpublished-import': 'off',
+    // Allow 'package'
+    'n/no-missing-require': ['error', {
+      'allowModules': ['package']
+    }],
+    'n/no-missing-import': ['error', {
+      'allowModules': ['package']
+    }]
+  },
+  languageOptions: {
+    globals: {
+      ...globals.node
+    }
   }
 }];
