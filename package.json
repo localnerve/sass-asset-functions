@@ -18,7 +18,7 @@
     "test": "npm run test:unit && npm run test:package",
     "test:package": "node ./__test-package__/index.js",
     "pretest:unit": "node -e 'require(\"fs\").rmSync(\"./coverage\",{recursive:true,force:true})' && node -e 'require(\"fs\").mkdirSync(\"./coverage\",{recursive:true})'",
-    "test:unit": "node --test --experimental-test-coverage --test-coverage-include=\"lib/**\" --test-reporter=spec --test-reporter-destination=stdout --test-reporter=lcov --test-reporter-destination=./coverage/lcov.info \"__tests__/test.js\""
+    "test:unit": "node --test --experimental-test-coverage --test-reporter=spec --test-reporter-destination=stdout --test-reporter=lcov --test-reporter-destination=./coverage/lcov.info \"__tests__/test.js\""
   },
   "repository": {
     "type": "git",
