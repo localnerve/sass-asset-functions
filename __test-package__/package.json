@@ -11,5 +11,8 @@
   "license": "ISC",
   "dependencies": {
     "package": "latest"
+  },
+  "engines": {
+    "node": ">=22.17"
   }
 }

@@ -4,13 +4,14 @@
  * Copyright (c) 2023-2025 Alex Grant (@localnerve), LocalNerve LLC
  * Licensed under the MIT license.
  */
+import assert from 'node:assert';
+import { describe, test } from 'node:test';
 import * as fs from 'node:fs';
-import * as url from 'node:url';
 import * as path from 'node:path';
 import * as defaultSass from 'sass';
 import { default as assetFunctions } from '../index.js';
 
-const thisDir = url.fileURLToPath(new URL('.', import.meta.url));
+const thisDir = import.meta.dirname;
 const sassDir = path.join(thisDir, 'scss');
 const cssDir = path.join(thisDir, 'css');
 const errDir = path.join(thisDir, 'err');
@@ -98,16 +99,16 @@ function checkCompileResult (file, suite, result) {
         if (err) {
           throw err;
         }
-    
+
         const rendered = result.css.toString();
         const raw = expected.toString();      
-        
+
         // Output style differences between node-sass and dart-sass, spacing and quotes '|".
         // For output equality comparison, strip quotes and spaces.
         const stripRendered = rendered.replace(/\s+|"|'/g, '');
         const stripRaw = raw.replace(/\s+|"|'/g, '');
-    
-        expect(stripRendered).toEqual(stripRaw);
+
+        assert.strictEqual(stripRendered, stripRaw);
         resolve();
       });
     } catch (err) {
@@ -189,99 +190,111 @@ function asset_cache_buster_path_async (http_path, real_path, done) {
   setTimeout(done, 10, arg);
 }
 
-describe('basic', function () {
-  test.each(files)('%s', file => {
-    return equalsFileAsync(file, 'basic');
-  });
+describe('basic', () => {
+  for (const file of files) {
+    test(file, () => equalsFileAsync(file, 'basic'));
+  }
 });
 
-describe('err:legacy', function () {
+describe('err:legacy', () => {
   const input = makeErrorInput();
-  test.failing.each(input.errFiles)('%s', file => {
-    const options = input.errOpts[file] || {};
-    assignBasicOpts(options);
-    options.legacyAPI = true;
-    options.testdir = 'err';
-    return render(file, options);
-  });
+  for (const file of input.errFiles) {
+    test(file, () => {
+      assert.rejects(() => {
+        const options = input.errOpts[file] || {};
+        assignBasicOpts(options);
+        options.legacyAPI = true;
+        options.testdir = 'err';
+        return render(file, options);
+      });
+    });
+  }
 });
 
-describe('err:async', function () {
+describe('err:async', () => {
   const input = makeErrorInput();
-  test.failing.each(input.errFiles)('%s', file => {
-    const options = input.errOpts[file] || {};
-    assignBasicOpts(options);
-    options.async = true;
-    options.testdir = 'err';
-    return compileAsync(file, options);
-  });
+  for (const file of input.errFiles) {
+    test(file, () => {
+      assert.rejects(() => {
+        const options = input.errOpts[file] || {};
+        assignBasicOpts(options);
+        options.async = true;
+        options.testdir = 'err';
+        return compileAsync(file, options);
+      });
+    });
+  }
 });
 
-describe('err:compile', function () {
+describe('err:compile', () => {
   const input = makeErrorInput();
-  test.failing.each(input.errFiles)('%s', file => {
-    const options = input.errOpts[file] || {};
-    assignBasicOpts(options);
-    options.testdir = 'err';
-    return compile(file, options);
-  });
+  for (const file of input.errFiles) {
+    test(file, () => {
+      assert.rejects(() => {
+        const options = input.errOpts[file] || {};
+        assignBasicOpts(options);
+        options.testdir = 'err';
+        return compile(file, options);
+      });
+    });
+  }
 });
 
-describe('asset_host', function () {
-  test.each(files)('%s', file => {
-    return equalsFileAsync(file, 'asset_host', {
+describe('asset_host', () => {
+  for (const file of files) {
+    test(file, () => equalsFileAsync(file, 'asset_host', {
       asset_host,
       checkResult: checkCompileResult
-    });
-  });
+    }));
+  }
 });
 
-describe('asset_host:async', function () {
-  test.each(files)('%s', file => {
-    return equalsFileAsync(file, 'asset_host', {
+describe('asset_host:async', () => {
+  for (const file of files) {
+    test(file, () => equalsFileAsync(file, 'asset_host', {
       asset_host: asset_host_async,
       async: true,
       checkResult: checkCompileResult
-    });
-  });
+    }));
+  }
 });
 
-describe('asset_cache_buster', function () {
-  describe('using query', function () {
-    test.each(files)('%s', file => {
-      return equalsFileAsync(file, 'asset_cache_buster/query', {
+describe('asset_cache_buster', () => {
+  describe('using query', () => {
+    for (const file of files) {
+      test(file, () => equalsFileAsync(file, 'asset_cache_buster/query', {
         asset_cache_buster: asset_cache_buster_query,
         checkResult: checkCompileResult
-      });
-    });
+      }));
+    }
   });
 
-  describe('using query:async', function () {
-    test.each(files)('%s', file => {
-      return equalsFileAsync(file, 'asset_cache_buster/query', {
+  describe('using query:async', () => {
+    for (const file of files) {
+      test(file, () => equalsFileAsync(file, 'asset_cache_buster/query', {
         asset_cache_buster: asset_cache_buster_query_async,
         checkResult: checkCompileResult,
         async: true
-      });
-    });
+      }));
+    }
   });
 
-  describe('using path', function () {
-    test.each(files)('%s', file => {
-      return equalsFileAsync(file, 'asset_cache_buster/path', {
+  describe('using path', () => {
+    for (const file of files) {
+      test(file, () => equalsFileAsync(file, 'asset_cache_buster/path', {
         asset_cache_buster: asset_cache_buster_path,
         checkResult: checkCompileResult
-      });
-    });
+      }));
+    }
   });
 
-  describe('using path:async', function () {
-    test.each(files)('%s', file => {
-      return equalsFileAsync(file, 'asset_cache_buster/path', {
+  describe('using path:async', () => {
+    for (const file of files) {
+      test(file, () => equalsFileAsync(file, 'asset_cache_buster/path', {
         asset_cache_buster: asset_cache_buster_path_async,
         checkResult: checkCompileResult,
         async: true
-      });
-    });
+      }));
+    }
   });
 });
