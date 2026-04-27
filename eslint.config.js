@@ -49,7 +49,14 @@ export default [{
       'allowModules': ['sass']
     }],
     // Allow unpublished imports
-    "n/no-unpublished-import": "off"
+    'n/no-unpublished-import': 'off',
+    // Allow 'package'
+    'n/no-missing-require': ['error', {
+      'allowModules': ['package']
+    }],
+    'n/no-missing-import': ['error', {
+      'allowModules': ['package']
+    }]
   },
   languageOptions: {
     globals: {
