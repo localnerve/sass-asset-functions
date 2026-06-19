@@ -8,7 +8,6 @@ updates:
       time: "09:00"
     groups:
       minor-and-patch:
-        dependency-type: "all"
         update-types: ["minor", "patch"]
     open-pull-requests-limit: 10
     labels:
