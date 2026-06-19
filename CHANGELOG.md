@@ -1,5 +1,8 @@
 # Sass Asset Functions Change Log
 
+# 7.13.1
+  * devdeps updates
+
 # 7.13.0
   * sass 1.101.0
 
