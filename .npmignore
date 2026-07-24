@@ -7,3 +7,5 @@ tmp
 posttranspile.js
 babel.config.json
 eslint.config.js
+*.log
+.nvmrc
