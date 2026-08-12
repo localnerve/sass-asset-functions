@@ -1,5 +1,9 @@
 # Sass Asset Functions Change Log
 
+# 7.15.0
+  * Replace image-size@2.0.2 with @localnerve/image-size@2.1.2
+  * devdeps
+
 # 7.14.0
   * sass 1.102.0
 
