@@ -51,7 +51,7 @@
   },
   "homepage": "https://github.com/localnerve/sass-asset-functions",
   "dependencies": {
-    "@localnerve/image-size": "^2.1.2",
+    "@localnerve/image-size": "^2.1.3",
     "immutable": "^5.1.9",
     "mime-types": "^3.0.2",
     "sass": "^1.103.0"
