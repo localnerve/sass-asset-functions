@@ -1,5 +1,8 @@
 # Sass Asset Functions Change Log
 
+# 7.17.2
+  * @localnerve/image-size@2.1.4
+
 # 7.17.1
   * sass 1.104.1
 
