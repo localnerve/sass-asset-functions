@@ -1,6 +1,6 @@
 {
   "name": "@localnerve/sass-asset-functions",
-  "version": "7.17.2",
+  "version": "7.18.0",
   "description": "compass-style asset functions for dart-sass or other sass compilers",
   "main": "index.js",
   "exports": {
@@ -54,13 +54,13 @@
     "@localnerve/image-size": "^2.1.4",
     "immutable": "^5.1.9",
     "mime-types": "^3.0.2",
-    "sass": "^1.104.1"
+    "sass": "^1.105.0"
   },
   "devDependencies": {
-    "@babel/cli": "^8.0.5",
-    "@babel/preset-env": "^8.0.5",
+    "@babel/cli": "^8.0.6",
+    "@babel/preset-env": "^8.0.6",
     "@eslint/js": "^10.0.1",
-    "eslint": "^10.10.0",
+    "eslint": "^10.11.0",
     "eslint-plugin-n": "^18.3.0",
     "glob": "^13.0.6",
     "globals": "^17.12.0",
