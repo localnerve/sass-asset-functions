@@ -1,5 +1,11 @@
 # Sass Asset Functions Change Log
 
+# 7.18.3
+  * sass 1.105.2
+
+# 7.18.2
+  * devdeps only
+
 # 7.18.1
   * sass 1.105.1
 
