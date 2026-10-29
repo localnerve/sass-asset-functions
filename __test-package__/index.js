@@ -112,6 +112,41 @@ function install () {
 }
 
 /**
+ * Verify that agent/developer documentation ships in the published package.
+ * These live in node_modules for consumers and are referenced by AGENTS.md,
+ * README.md, and docs/index.md — if a future `files` allowlist drops them,
+ * this fails the package test instead of silently stripping guidance.
+ */
+function verifyShippedDocs () {
+  console.log('--- verify shipped docs ---');
+
+  const pkgPath = path.join(localNodeModulesPath, 'package');
+  const expected = [
+    'AGENTS.md',
+    'docs/index.md',
+    'docs/installation.md',
+    'docs/api-modes.md',
+    'docs/functions.md',
+    'docs/options.md',
+    'docs/asset-cache-buster.md',
+    'docs/asset-host.md',
+    'docs/data-and-lookup.md',
+    'examples/README.md',
+    'examples/basic/run.js',
+    'examples/cache-busting/run.js',
+    'examples/custom-host/run.js',
+    'examples/data-lookup/run.js'
+  ];
+
+  const missing = expected.filter(file => !fs.existsSync(path.join(pkgPath, file)));
+  if (missing.length > 0) {
+    throw new Error(`package is missing documentation files: ${missing.join(', ')}`);
+  }
+  console.log('shipped docs verified');
+  return Promise.resolve();
+}
+
+/**
  * Extract the npm packed tar to local node_modules.
  */
 function extractTarPackage () {
@@ -144,6 +179,7 @@ console.log('----------------------------------------------------');
 transpile()
   .then(pack)
   .then(extractTarPackage)
+  .then(verifyShippedDocs)
   .then(install)
   .then(runTests)
   .catch(e => {

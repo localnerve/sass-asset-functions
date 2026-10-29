@@ -10,6 +10,8 @@
 
 This module provides a set of Sass functions that help with asset management in web projects, similar to what Compass provided. You can use functions like `image-url()` instead of plain `url()` and the module will automatically resolve paths correctly based on your build configuration. Further, you can expose arbitrary built-time metadata (typically from image processors) for use in sass to generate image references, dimensions, types, breakpoints, etc.
 
+The standout capability is **build-time data driving CSS generation**: other build-time processes — above all image processing, but also HTML templating — hand structured records (image names, sizes, types, densities) to Sass via the `data` option and `lookup()`. A stylesheet loops over those records and emits matching CSS. In traditional web development these image↔CSS mappings are maintained by hand; here the images and their processing pipeline become the single source of truth, and the generated CSS/HTML changes automatically with them. See [docs/data-and-lookup.md](docs/data-and-lookup.md).
+
 _This is a sass compiler plugin that uses the [functions](https://sass-lang.com/documentation/js-api/interfaces/options/#functions) option of the sass javascript api. Supports modern and legacy sass javascript api: `render`, `compile`, and `compileAsync`_
 
 ## Origin/History
@@ -22,13 +24,17 @@ This module provides some of the asset functions that came with [Compass](http:/
 
 ## Functions Exposed to Sass
 
-- `image-url($filename: null, $only_path: false)`
-- `image-width($filename: null)`
-- `image-height($filename: null)`
-- `font-url($filename: null, $only-path: false)`
-- `font-files($filenames...)`
-- `inline-image($filename: null, $mime-type: null)`
-- `lookup($keys...)`
+| function | returns |
+| --- | --- |
+| `image-url($filename: null, $only_path: false)` | `url('…')` string (or bare path with `$only_path`) |
+| `image-width($filename: null)` | width in px (reads the file) |
+| `image-height($filename: null)` | height in px (reads the file) |
+| `font-url($filename: null, $only-path: false)` | `url('…')` string (or bare path with `$only-path`) |
+| `font-files($filenames...)` | list of `url('…') format('…')` for `@font-face src` |
+| `inline-image($filename: null, $mime-type: null)` | `url('data:…;base64,…')` data URL (reads the file) |
+| `lookup($keys...)` | build-time data from the `data` option (Boolean/Number/String/List/Map/Null) |
+
+Full signatures and behavior: [docs/functions.md](docs/functions.md)
 
 ## Usage
 
@@ -56,9 +62,15 @@ const result = sass.compile(scss_filename, {
 });
 ```
 
+```scss
+.hero {
+  background-image: image-url('hero.webp'); // url('/images/hero.webp') with defaults
+}
+```
+
 ## Options
 
-All options are optional.
+All options are optional — see [docs/options.md](docs/options.md) for the full reference, including the URL pipeline order (path → cache buster → asset host → fragment).
 
 | name | type | description |
 | --- | --- | --- |
@@ -75,170 +87,30 @@ All options are optional.
 
 ### Advanced Options Quick Links
 
-* **[Asset Cache Buster](#asset_cache_buster-a-function-to-rewrite-the-asset-path):** Modify URLs for cache busting (e.g., adding version numbers)
-* **[Asset Host](#asset_host-a-function-which-completes-with-a-string-used-as-asset-host):** Set custom hostnames for assets
-* **[Data Lookup](#lookup-a-function-to-use-arbitrary-data-in-sass-stylesheets):** Pass arbitrary data from JavaScript to Sass via the lookup() function
+* **[Asset Cache Buster](docs/asset-cache-buster.md):** Modify URLs for cache busting (e.g., adding version numbers)
+* **[Asset Host](docs/asset-host.md):** Set custom hostnames for assets
+* **[Data Lookup](docs/data-and-lookup.md):** Build-time data from image processing and templating driving CSS generation via `lookup()`
 
-### Examples
+## Documentation
 
-You can specify the paths to your resources using the following options (shown with defaults):
+Extended documentation lives in [`docs/`](docs/index.md):
 
-```js
-{
-  images_path: 'public/images', // local directory
-  http_images_path: '/images',  // map to web path
-  fonts_path: 'public/fonts',   // local directory
-  http_fonts_path: '/fonts',    // map to web path
-  data: {}                      // build data exposed by *lookup*
-}
+- [Installation](docs/installation.md) — install + ESM/CJS wiring
+- [API modes](docs/api-modes.md) — legacy vs modern sync/async APIs; when `async: true` is required
+- [Functions](docs/functions.md) — all Sass functions, signatures, return types
+- [Options](docs/options.md) — full options reference + URL pipeline order
+- [Asset cache buster](docs/asset-cache-buster.md) — cache busting contracts + example
+- [Asset host](docs/asset-host.md) — asset host contracts + example
+- [Data & lookup](docs/data-and-lookup.md) — build-time data driving CSS/HTML generation
+
+Runnable examples live in [`examples/`](examples/) — each subfolder is self-contained and prints its compiled CSS to stdout:
+
+```sh
+node examples/basic/run.js
+node examples/cache-busting/run.js
+node examples/custom-host/run.js
+node examples/data-lookup/run.js
 ```
-
-So if your project images reside in `public/img` at build-time instead of `public/images`, you use it as follows:
-
-```js
-const sass = require('sass');
-const { default: assetFunctions } = require('@localnerve/sass-asset-functions');
-
-const result = sass.compile(scss_filename, {
-  functions: assetFunctions({
-    images_path: 'public/img',  // the local path to the assets 
-    http_images_path: '/images' // the path from the browser to the assets
-  })
-  [, options...]
-});
-```
-
-#### `lookup`: a function to use arbitrary data in sass stylesheets
-
-This function retrieves arbitrary build-time data for reference in stylesheet compilation. Could be an asset name, prefix, or could be a whole list or map of things. Here's the list of javascript type mappings (everything else returns SassNull):
-  * Boolean => SassBoolean
-  * Number => SassNumber
-  * String => SassString
-  * Array => SassList
-  * Set => SassList
-  * Object => SassMap
-  * Map => SassMap
-
-```js
-const result = sass.compile(scss_filename, {
-  functions: assetFunctions({
-    data: {
-      'hero-image-names': {
-        big: 'hero-1920x300.webp',
-        medium: 'hero-1440x300.webp',
-        small: 'hero-1024x300.webp'
-      },
-      nested: {
-        process: true,
-        'process-map': {
-          one: 'one',
-          two: 'two'
-        }
-      }
-    }
-  })
-});
-```
-
-```scss
-$hero-images: lookup('hero-image-names');
-@each $key, $val in $hero-images {
-  .hero-image-#{$key} {
-    background-image: image-url($val);
-  }
-}
-
-$nested-process: lookup('nested', 'process');
-$nested-data: lookup('nested', 'process-map');
-@if $nested-process {
-  @each $key, $val in $nested-data {
-    .process-#{$key} {
-      content: '#{$val}';
-    }
-  }
-}
-```
-
-#### `asset_host`: a function which completes with a string used as asset host.
-
-```js
-const result = sass.compile(scss_filename, {
-  functions: assetFunctions({
-    asset_host: (http_path, done) => {
-      done('http://assets.example.com');
-      // or use the supplied path to calculate a host
-      done(`http://assets${http_path.length % 4}.example.com`);
-    }
-  })
-  [, options...]
-});
-```
-
-#### `asset_cache_buster`: a function to rewrite the asset path
-
-When this function returns a string, it's set as the query of the path. When returned an object, `path` and `query` will be used.
-
-```js
-const result = sass.compile(scss_filename, {
-  functions: assetFunctions({
-    asset_cache_buster: (http_path, real_path, done) => {
-      done('v=123');
-    }
-  })
-  [, options...]
-});
-```
-
-##### A more advanced example of `asset_cache_buster`:
-
-Here we include the file's  hexdigest in the path, using the [`hexdigest`](https://github.com/koenpunt/node-hexdigest) module.
-
-For example, `/images/myimage.png` would become `/images/myimage-8557f1c9b01dd6fd138ba203e6a953df6a222af3.png`.
-
-```js
-const sass = require('sass');
-const path = require('path');
-const fs = require('fs');
-const hexdigest = require('hexdigest');
-const { default: assetFunctions } = require('@localnerve/sass-asset-functions');
-
-const result = sass.compileAsync(scss_filename, {
-  functions: assetFunctions({
-    async: true,
-    asset_cache_buster: (http_path, real_path, done) => {
-      hexdigest(real_path, 'sha1', (err, digest) => {
-        if (err) {
-          // an error occurred, maybe the file doesn't exist.
-          // Calling `done` without arguments will result in an unmodified path.
-          done();
-        } else {
-          const extname = path.extname(http_path);
-          const basename = path.basename(http_path, extname);
-          const new_name = `${basename}-${digest}${extname}`;
-          done({path: path.join(path.dirname(http_path), new_name), query: null});
-        }
-      });
-    }
-  })
-  [, options...]
-});
-```
-
-#### `sass`: Overriding the default compiler with Node-Sass
-
-Example using the node-sass compiler using the new option `sass`.
-
-```js
-const sass = require('node-sass');
-const { default: assetFunctions } = require('@localnerve/sass-asset-functions');
-
-const result = sass.compile(scss_filename, {
-  functions: assetFunctions({ sass })
-  [, options...]
-});
-```
-
-_As of version 7.0.0, node-sass integration is no longer tested_
 
 ## Contributing
 
